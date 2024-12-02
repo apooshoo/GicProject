@@ -1,0 +1,6 @@
+@GicBackend_HostAddress = http://localhost:5294
+
+GET {{GicBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
