@@ -1,7 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+
+  let seedCafes = [
+    { Logo: "", Name: "Round Boy Roasters", Description: "", Employees: "", Location: "" },
+    { Logo: "", Name: "Yahava", Description: "", Employees: "", Location: "" },
+    { Logo: "", Name: "Starbucks", Description: "", Employees: "", Location: "" }
+  ]
+
+  const [cafes, setCafes] = useState({
+    seedCafes
+  });
+
   return (
     <div className="App">
       <header className="App-header">
