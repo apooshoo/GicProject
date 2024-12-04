@@ -1,6 +1,7 @@
-import { useState } from 'react';
 import React from 'react';
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import Button from '@mui/material/Button';
 import { AgGridReact } from 'ag-grid-react'; 
 import "ag-grid-community/styles/ag-grid.css"; 
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the Data Grid
@@ -20,8 +21,7 @@ const GridExample = () => {
           let args = {state:{Name:props.data.Name}}
           navigate(path, args);
         }
-    //   return <button onClick={() => window.alert(props.data.Name) }>Push Me!</button>;
-        return <button onClick={routeChange}>Push Me!</button>;
+        return <Button variant="outlined" onClick={routeChange}>Push Me!</Button>;
     };
   
     // Column Definitions: Defines the columns to be displayed.
