@@ -16,7 +16,7 @@ function App() {
       ]);
 
       const CustomButtonComponent = (props) => {
-        return <button onClick={() => window.alert('clicked') }>Push Me!</button>;
+        return <button onClick={() => window.alert(props.data.Name) }>Push Me!</button>;
       };
     
       // Column Definitions: Defines the columns to be displayed.
