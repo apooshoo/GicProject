@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import React from 'react';
+import { useNavigate } from "react-router-dom";
 import { AgGridReact } from 'ag-grid-react'; 
 import "ag-grid-community/styles/ag-grid.css"; 
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the Data Grid
@@ -12,7 +14,14 @@ const GridExample = () => {
     ]);
 
     const CustomButtonComponent = (props) => {
-      return <button onClick={() => window.alert(props.data.Name) }>Push Me!</button>;
+        let navigate = useNavigate(); 
+        const routeChange = () =>{ 
+          let path = `/Employee`; 
+          let args = {state:{Name:props.data.Name}}
+          navigate(path, args);
+        }
+    //   return <button onClick={() => window.alert(props.data.Name) }>Push Me!</button>;
+        return <button onClick={routeChange}>Push Me!</button>;
     };
   
     // Column Definitions: Defines the columns to be displayed.
