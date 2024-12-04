@@ -2,13 +2,13 @@ import { Routes, Route } from 'react-router-dom';
 import Cafe from './pages/cafe';
 import Employee from './pages/employee';
 import Home from './pages/home';
-import NavigationBar from './components/navBar';
+import NavBar from './components/navBar';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <NavigationBar/>
+      <NavBar/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cafe" element={<Cafe />} />
