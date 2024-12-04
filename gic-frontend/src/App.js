@@ -14,13 +14,18 @@ function App() {
         { Logo: "B", Name: "Yahava", Description: "", Employees: "", Location: "" },
         { Logo: "C", Name: "Starbucks", Description: "", Employees: "", Location: "" }
       ]);
+
+      const CustomButtonComponent = (props) => {
+        return <button onClick={() => window.alert('clicked') }>Push Me!</button>;
+      };
     
       // Column Definitions: Defines the columns to be displayed.
       const [colDefs, setColDefs] = useState([
         { field: "Logo" },
         { field: "Name" },
         { field: "Description" },
-        { field: "Location" }
+        { field: "Location", filter: true },
+        { field: "button", cellRenderer: CustomButtonComponent }
       ]);
    
       // ...
