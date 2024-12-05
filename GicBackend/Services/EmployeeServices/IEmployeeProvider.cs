@@ -8,5 +8,7 @@ namespace GicBackend.Services.EmployeeServices
         IDbHelper _dbHelper { init; }
 
         void GetEmployeeCountPerCafe(IEnumerable<Cafe> cafes);
+        List<Employee> GetAllEmployees();
+        List<Employee> GetEmployeeByCafe(string cafe_id);
     }
 }

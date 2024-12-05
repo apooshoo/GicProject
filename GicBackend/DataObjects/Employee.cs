@@ -39,6 +39,12 @@ namespace GicBackend.DataObjects
 
         [Column("gender")]
         public string gender { get; set; }
+
+        [NotMapped]
+        public string cafe { get; set; }
+
+        [NotMapped]
+        public int days_worked { get; set; }
     }
 #pragma warning restore CS8618 // 
 }
