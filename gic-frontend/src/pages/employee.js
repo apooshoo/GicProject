@@ -1,26 +1,40 @@
-import { useState } from 'react';
 import React from 'react';
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import GenericGrid from '../components/grid'
-import {useLocation} from 'react-router-dom';
+import axios from 'axios';
 
 function Employee() {
     const location = useLocation();
-    console.log(location);
 
-    const [rowData, setRowData] = useState([
-        { Id: 1, Name: "A", EmailAddress: "", PhoneNumber: "", DaysWorked: "", CafeName: "" },
-        { Id: 2, Name: "B", EmailAddress: "", PhoneNumber: "", DaysWorked: "", CafeName: "" },
-        { Id: 3, Name: "C", EmailAddress: "", PhoneNumber: "", DaysWorked: "", CafeName: "" }
-    ]);
+    useEffect(() => {
+        //Runs only on the first render
+        console.log('received');
+        console.log(location);
+        
+        var queryString = location.state && location.state.cafe_id 
+            ? "?cafe=" + location.state.cafe_id 
+            : "";
+        axios.get('https://localhost:5000/employees' + queryString)
+            .then(function (response) {
+                console.log("employee response:")
+                console.log(response);
+                setRowData(response.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+      }, []);
+
+    const [rowData, setRowData] = useState([]);
 
     const [colDefs, setColDefs] = useState([
-        { field: "Id" },
-        { field: "Name" },
-        { field: "EmailAddress" },
-        { field: "PhoneNumber" },
-        { field: "DaysWorked" },
-        { field: "CafeName" },
+        { field: "id" },
+        { field: "name" },
+        { field: "email_address" },
+        { field: "phone_number" },
+        { field: "days_worked" },
+        { field: "cafe" },
     ]);
 
     return (

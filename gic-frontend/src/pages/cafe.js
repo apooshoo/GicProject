@@ -6,34 +6,31 @@ import GenericGrid from '../components/grid'
 import axios from 'axios';
 
 const Cafe = () => {
-  
-  useEffect(() => {
+    useEffect(() => {
     //Runs only on the first render
       axios.get('https://localhost:5000/cafes')
-      .then(function (response) {
-        console.log(response);
-        setRowData(response.data)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .then(function (response) {
+          console.log("cafe response:")
+          console.log(response);
+          setRowData(response.data)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }, []);
 
-
-    const [rowData, setRowData] = useState([
-      // { Logo: "A", Name: "Round Boy Roasters", Description: "", Employees: "", Location: "" },
-      // { Logo: "B", Name: "Yahava", Description: "", Employees: "", Location: "" },
-      // { Logo: "C", Name: "Starbucks", Description: "", Employees: "", Location: "" }
-    ]);
+    const [rowData, setRowData] = useState([]);
 
     const OpenEmployeePageBtn = (props) => {
         let navigate = useNavigate(); 
         const routeChange = () =>{ 
+          console.log('sending')
+          console.log(props)
           let path = `/Employee`; 
-          let args = {state:{Name:props.data.Name}}
+          let args = {state:{cafe_id:props.data.id}}
           navigate(path, args);
         }
-        return <Button variant="outlined" onClick={routeChange}>Push Me!</Button>;
+        return <Button variant="outlined" onClick={routeChange}>{props.data.employees}</Button>;
     };
   
     const [colDefs, setColDefs] = useState([
@@ -41,9 +38,9 @@ const Cafe = () => {
       { field: "name" },
       { field: "description" },
       { field: "location", filter: true },
-      { field: "button", cellRenderer: OpenEmployeePageBtn }
+      { field: "employees", cellRenderer: OpenEmployeePageBtn }
     ]);
- 
+   
     return (
       <div>
         <GenericGrid rowData={rowData} colDefs={colDefs} />

@@ -18,8 +18,10 @@ namespace GicBackend.Controllers
         }
 
         [HttpGet(Name = "employees")]
-        public IEnumerable<Employee> Get(string? cafe)
+        public IEnumerable<Employee> Get(string? cafe) // cafe_id
         {
+            // This should be more modular (to get non-employee info like cafe name) but I'm out of time!
+
             List<Employee> employees;
             using (var scope = EmployeeRegistrar.GetModules())
             {

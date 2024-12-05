@@ -7,7 +7,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Home', 'Cafe'];
+const pages = ['Home', 'Cafe', 'Employee'];
 
 function NavBar() {
   return (
