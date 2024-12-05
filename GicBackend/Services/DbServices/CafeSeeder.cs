@@ -19,10 +19,10 @@ namespace GicBackend.Services.DbServices
         public void SeedTable()
         {
             var cafes = new List<Cafe> {
-                new Cafe { id = SeedConstants.SeedGuid1.ToString(), name = "A", description = "AA", location = "AAA" },
-                new Cafe { id = SeedConstants.SeedGuid2.ToString(), name = "B", description = "BB", location = "BBB" },
-                new Cafe { id = SeedConstants.SeedGuid3.ToString(), name = "C", description = "CC", location = "CCC" },
-                new Cafe { id = SeedConstants.SeedGuid4.ToString(), name = "D", description = "DD", location = "DDD" },
+                new Cafe { id = SeedConstants.SeedGuid1.ToString(), name = "Round Boy Roasters", description = "AA", location = "Bukit Merah" },
+                new Cafe { id = SeedConstants.SeedGuid2.ToString(), name = "Yahava", description = "BB", location = "Tagore Lane" },
+                new Cafe { id = SeedConstants.SeedGuid3.ToString(), name = "Starbucks", description = "CC", location = "United Square" },
+                new Cafe { id = SeedConstants.SeedGuid4.ToString(), name = "Coffee Bean", description = "DD", location = "United Square" },
             };
 
             _recordInserter.InsertCollection(cafes);

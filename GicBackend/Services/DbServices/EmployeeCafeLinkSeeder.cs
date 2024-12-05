@@ -22,7 +22,7 @@ namespace GicBackend.Services.DbServices
                 new EmployeeCafeLink { employee_id = 1, cafe_id = SeedConstants.SeedGuid1.ToString(), start_date = DateTime.Now.AddDays(-1), end_date = DateTime.Now.AddDays(1) },
                 new EmployeeCafeLink { employee_id = 2, cafe_id = SeedConstants.SeedGuid2.ToString(), start_date = DateTime.Now.AddDays(-2), end_date = DateTime.Now.AddDays(2) },
                 new EmployeeCafeLink { employee_id = 3, cafe_id = SeedConstants.SeedGuid3.ToString(), start_date = DateTime.Now.AddDays(-3), end_date = null },
-                new EmployeeCafeLink { employee_id = 4, cafe_id = SeedConstants.SeedGuid4.ToString(), start_date = DateTime.Now.AddDays(-4), end_date = null },
+                new EmployeeCafeLink { employee_id = 4, cafe_id = SeedConstants.SeedGuid1.ToString(), start_date = DateTime.Now.AddDays(-4), end_date = null },
             };
 
             _recordInserter.InsertCollection(links);

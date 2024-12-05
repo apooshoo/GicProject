@@ -18,6 +18,9 @@ namespace GicBackend.DataObjects
 
         [Column("location")]
         public string location { get; set; }
+
+        [NotMapped]
+        public int employees { get; set; }
     }
 #pragma warning restore CS8618 // 
 }

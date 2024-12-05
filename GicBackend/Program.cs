@@ -1,3 +1,8 @@
+using Autofac;
+using GicBackend.DataObjects;
+using GicBackend.Services.AutofacServices;
+using GicBackend.Services.DbServices;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,5 +26,30 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Stuck this here to init the DB. Would not do this in production >_<
+using (var scope = DbSeederRegistrar.GetModules(typeof(Cafe)))
+{
+    var dbSeeder = scope.Resolve<IDbSeeder>();
+    dbSeeder.SetupTable();
+    dbSeeder.SeedTable();
+    var result = dbSeeder.TestSeedData();
+}
+
+using (var scope = DbSeederRegistrar.GetModules(typeof(Employee)))
+{
+    var dbSeeder = scope.Resolve<IDbSeeder>();
+    dbSeeder.SetupTable();
+    dbSeeder.SeedTable();
+    var result = dbSeeder.TestSeedData();
+}
+
+using (var scope = DbSeederRegistrar.GetModules(typeof(EmployeeCafeLink)))
+{
+    var dbSeeder = scope.Resolve<IDbSeeder>();
+    dbSeeder.SetupTable();
+    dbSeeder.SeedTable();
+    var result = dbSeeder.TestSeedData();
+}
 
 app.Run();

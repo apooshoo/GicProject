@@ -4,7 +4,7 @@ using GicBackend.Services.DbServices;
 
 namespace GicBackend.Services.AutofacServices
 {
-    public static class WeatherForecastRegistrar
+    public static class DbSeederRegistrar
     {
         public static ILifetimeScope GetModules(Type recordType)
         {
@@ -23,6 +23,7 @@ namespace GicBackend.Services.AutofacServices
             builder.RegisterType<DbHelper>().As<IDbHelper>();
             builder.RegisterType<RecordInserter>().As<IRecordInserter>();
         }
+
         private static void RegisterSpecificModules(ContainerBuilder builder, Type recordType)
         {
             if (recordType == typeof(Cafe))

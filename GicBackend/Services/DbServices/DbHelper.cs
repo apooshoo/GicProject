@@ -22,6 +22,8 @@ namespace GicBackend.Services.DbServices
 
         public int Execute(string query) => _con.Execute(query);
         public int Execute(string query, object param) => _con.Execute(query, param);
+        public int ExecuteScalar(string query, object param) => _con.ExecuteScalar<int>(query, param);
         public IEnumerable<T> Query<T>(string query) => _con.Query<T>(query);
+        public IEnumerable<T> Query<T>(string query, object param) => _con.Query<T>(query, param);
     }
 }
