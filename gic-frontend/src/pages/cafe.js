@@ -6,7 +6,7 @@ import { AgGridReact } from 'ag-grid-react';
 import "ag-grid-community/styles/ag-grid.css"; 
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the Data Grid
 
-const GridExample = () => {
+const Cafe = () => {
     // Row Data: The data to be displayed.
     const [rowData, setRowData] = useState([
       { Logo: "A", Name: "Round Boy Roasters", Description: "", Employees: "", Location: "" },
@@ -14,7 +14,7 @@ const GridExample = () => {
       { Logo: "C", Name: "Starbucks", Description: "", Employees: "", Location: "" }
     ]);
 
-    const CustomButtonComponent = (props) => {
+    const OpenEmployeePageBtn = (props) => {
         let navigate = useNavigate(); 
         const routeChange = () =>{ 
           let path = `/Employee`; 
@@ -30,7 +30,7 @@ const GridExample = () => {
       { field: "Name" },
       { field: "Description" },
       { field: "Location", filter: true },
-      { field: "button", cellRenderer: CustomButtonComponent }
+      { field: "button", cellRenderer: OpenEmployeePageBtn }
     ]);
  
     // ...
@@ -55,4 +55,4 @@ const GridExample = () => {
     );
  }
 
- export default GridExample;
+ export default Cafe;
