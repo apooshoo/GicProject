@@ -2,7 +2,7 @@
 
 namespace GicBackend.Services.DbServices
 {
-    public class CafeSeeder : IDbSeeder
+    public class EmployeeCafeLinkSeeder : IDbSeeder
     {
         public required IDbHelper _dbHelper { protected get; init; }
         public required IRecordInserter _recordInserter { protected get; init; }
@@ -18,14 +18,14 @@ namespace GicBackend.Services.DbServices
 
         public void SeedTable()
         {
-            var cafes = new List<Cafe> {
-                new Cafe { id = SeedConstants.SeedGuid1.ToString(), name = "A", description = "AA", location = "AAA" },
-                new Cafe { id = SeedConstants.SeedGuid2.ToString(), name = "B", description = "BB", location = "BBB" },
-                new Cafe { id = SeedConstants.SeedGuid3.ToString(), name = "C", description = "CC", location = "CCC" },
-                new Cafe { id = SeedConstants.SeedGuid4.ToString(), name = "D", description = "DD", location = "DDD" },
+            var links = new List<EmployeeCafeLink> {
+                new EmployeeCafeLink { employee_id = 1, cafe_id = SeedConstants.SeedGuid1.ToString(), start_date = DateTime.Now.AddDays(-1), end_date = DateTime.Now.AddDays(1) },
+                new EmployeeCafeLink { employee_id = 2, cafe_id = SeedConstants.SeedGuid2.ToString(), start_date = DateTime.Now.AddDays(-2), end_date = DateTime.Now.AddDays(2) },
+                new EmployeeCafeLink { employee_id = 3, cafe_id = SeedConstants.SeedGuid3.ToString(), start_date = DateTime.Now.AddDays(-3), end_date = null },
+                new EmployeeCafeLink { employee_id = 4, cafe_id = SeedConstants.SeedGuid4.ToString(), start_date = DateTime.Now.AddDays(-4), end_date = null },
             };
 
-            _recordInserter.InsertCollection(cafes);
+            _recordInserter.InsertCollection(links);
         }
 
         public int TestSeedData()
@@ -33,7 +33,7 @@ namespace GicBackend.Services.DbServices
             using (_dbHelper.GetOpenConnection())
             {
                 // Omit "id" as we are doing the computed column server-side instead of in the DB.
-                var test = _dbHelper.Query<Cafe>("SELECT id,name,description,location FROM Cafe").ToList();
+                var test = _dbHelper.Query<EmployeeCafeLink>("SELECT employee_id,cafe_id,start_date,end_date FROM EmployeeCafeLink").ToList();
                 return test.Count;
             }
         }
@@ -44,7 +44,7 @@ namespace GicBackend.Services.DbServices
             {
                 using (_dbHelper.GetOpenConnection())
                 {
-                    _dbHelper.Execute("DROP TABLE Cafe");
+                    _dbHelper.Execute("DROP TABLE EmployeeCafeLink");
                 }
             }
             catch { }
@@ -53,11 +53,11 @@ namespace GicBackend.Services.DbServices
         private void CreateTable()
         {
             const string query = @"
-                CREATE TABLE Cafe (
-	                id				VARCHAR(36) PRIMARY KEY, -- SQLite does not support UUID/Guid
-	                name			NVARCHAR(10),
-	                description		NVARCHAR(256),
-	                location		NVARCHAR(256) 
+                CREATE TABLE EmployeeCafeLink (
+	                employee_id INTEGER,
+	                cafe_id VARCHAR(36),
+	                start_date DATETIME,
+	                end_date DATETIME
                 );   
             ";
 

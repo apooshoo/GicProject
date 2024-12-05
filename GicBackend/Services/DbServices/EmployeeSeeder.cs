@@ -52,7 +52,7 @@ namespace GicBackend.Services.DbServices
 
         private void CreateTable()
         {
-            var query = @"
+            const string query = @"
                 CREATE TABLE Employee (
 	                employee_id		INTEGER NOT NULL PRIMARY KEY,
 	                id				NVARCHAR(9), -- Begins with 'UI', 9 chars  in total

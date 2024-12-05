@@ -33,6 +33,14 @@ namespace GicBackend.Services.AutofacServices
             {
                 builder.RegisterType<EmployeeSeeder>().As<IDbSeeder>();
             }
+            else if (recordType == typeof(EmployeeCafeLink))
+            {
+                builder.RegisterType<EmployeeCafeLinkSeeder>().As<IDbSeeder>();
+            }
+            else
+            {
+                throw new ArgumentException("Type not registered: " + recordType.FullName);
+            }
         }
     }
 }

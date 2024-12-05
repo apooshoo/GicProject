@@ -39,6 +39,14 @@ namespace GicBackend.Services.DbServices
                 var employee = record as Employee;
                 return _dbHelper.Execute(query, new { employee.name, employee.email_address, employee.phone_number, employee.gender });
             }
+            else if (typeof(T) == typeof(EmployeeCafeLink))
+            {
+                const string query = @"
+                    INSERT INTO EmployeeCafeLink (employee_id,cafe_id,start_date,end_date) 
+                    VALUES (@employee_id,@cafe_id,@start_date,@end_date);";
+                var employee = record as EmployeeCafeLink;
+                return _dbHelper.Execute(query, new { employee.employee_id, employee.cafe_id, employee.start_date, employee.end_date });
+            }
             else
             {
                 throw new Exception("Invalid type specified.");

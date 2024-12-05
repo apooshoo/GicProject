@@ -41,6 +41,14 @@ namespace GicBackend.Controllers
                 var result = dbSeeder.TestSeedData();
             }
 
+            using (var scope = WeatherForecastRegistrar.GetModules(typeof(EmployeeCafeLink)))
+            {
+                var dbSeeder = scope.Resolve<IDbSeeder>();
+                dbSeeder.SetupTable();
+                dbSeeder.SeedTable();
+                var result = dbSeeder.TestSeedData();
+            }
+
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

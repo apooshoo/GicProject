@@ -10,7 +10,7 @@ namespace GicBackend.DataObjects
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long employee_id { get; set; }
+        public int employee_id { get; set; }
 
         [Column("id")]
         //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
