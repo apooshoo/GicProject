@@ -2,17 +2,29 @@
 
 namespace GicBackend.Services.DbServices
 {
-    public class DbSeeder : IDbSeeder
+    public class EmployeeSeeder : IDbSeeder
     {
         public required IDbHelper _dbHelper { protected get; init; }
 
-        public void SetupEmployeeTable()
+        public void SetupTable()
         {
             // SQLite does not support IFs or IF-ELSE logic, so I will unconditionally drop the table and re-create to seed it (swallowing the error on the first run).
             // Otherwise I would use DROP TABLE IF EXISTS.
 
             DropEmployeesTable();
             CreateEmployeesTable();
+        }
+
+        public void SeedTable()
+        {
+            var employees = new List<Employee> {
+                new Employee { name = "A", email_address = "AA", phone_number = "AAA", gender = "Male"  },
+                new Employee { name = "B", email_address = "BB", phone_number = "BBB", gender = "Male"  },
+                new Employee { name = "C", email_address = "CC", phone_number = "CCC", gender = "Male"  },
+                new Employee { name = "D", email_address = "DD", phone_number = "DDD", gender = "Female"  },
+            };
+
+            InsertCollection(employees);
         }
 
         public List<Employee> TestSeedData()
@@ -24,36 +36,27 @@ namespace GicBackend.Services.DbServices
             }
         }
 
-        public void SeedEmployeeTable()
-        {
-            var employees = new List<Employee> {
-                new Employee { name = "A", email_address = "AA", phone_number = "AAA", gender = "Male"  },
-                new Employee { name = "B", email_address = "BB", phone_number = "BBB", gender = "Male"  },
-                new Employee { name = "C", email_address = "CC", phone_number = "CCC", gender = "Male"  },
-                new Employee { name = "D", email_address = "DD", phone_number = "DDD", gender = "Female"  },
-            };
-
-            InsertEmployees(employees);
-        }
-
-        public void InsertEmployees(IEnumerable<Employee> employees)
+        public void InsertCollection<T>(IEnumerable<T> employees)
         {
             // Manually insert due to SQLite limitations. Otherwise, I would use _con.BulkInsert.
             using (_dbHelper.GetOpenConnection())
             {
-                foreach (Employee employee in employees)
+                foreach (T employee in employees)
                 {
-                    InsertEmployee(employee);
+                    InsertSingle(employee);
                 }
             }
         }
 
-        public int InsertEmployee(Employee employee)
+        private int InsertSingle<T>(T input)
         {
-            // Manually fill in params due to SQLite limitations. Otherwise, I would use _con.Insert<Employee>.
+            // Manually fill in params due to SQLite limitations.
+            // Otherwise, I would use a generic _con.Insert<T>.
             const string query = @"
                 INSERT INTO Employee (name,email_address,phone_number,gender) 
                 VALUES (@name,@email_address,@phone_number,@gender);";
+
+            var employee = input as Employee;
             return _dbHelper.Execute(query, new { employee.name, employee.email_address, employee.phone_number, employee.gender });
         }
 

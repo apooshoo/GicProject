@@ -27,7 +27,7 @@ namespace GicBackend.Controllers
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<DbHelper>().As<IDbHelper>();
-            builder.RegisterType<DbSeeder>().As<IDbSeeder>();
+            builder.RegisterType<EmployeeSeeder>().As<IDbSeeder>();
             builder.RegisterInstance<IConfiguration>(new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build());
@@ -35,8 +35,8 @@ namespace GicBackend.Controllers
             using (var scope = container.BeginLifetimeScope())
             {
                 var dbSeeder = scope.Resolve<IDbSeeder>();
-                dbSeeder.SetupEmployeeTable();
-                dbSeeder.SeedEmployeeTable();
+                dbSeeder.SetupTable();
+                dbSeeder.SeedTable();
                 var result = dbSeeder.TestSeedData();
             }
 

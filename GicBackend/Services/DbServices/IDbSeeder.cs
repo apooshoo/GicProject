@@ -4,10 +4,9 @@ namespace GicBackend.Services.DbServices
 {
     public interface IDbSeeder
     {
-        int InsertEmployee(Employee employee);
-        void InsertEmployees(IEnumerable<Employee> employees);
-        void SeedEmployeeTable();
-        void SetupEmployeeTable();
+        void SetupTable();
+        void SeedTable();
         List<Employee> TestSeedData();
+        void InsertCollection<T>(IEnumerable<T> employees);
     }
 }
