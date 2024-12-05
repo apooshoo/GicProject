@@ -18,8 +18,6 @@ namespace GicBackend.Controllers
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
-
-
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -27,7 +25,7 @@ namespace GicBackend.Controllers
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<DbHelper>().As<IDbHelper>();
-            builder.RegisterType<EmployeeSeeder>().As<IDbSeeder>();
+            builder.RegisterType<CafeSeeder>().As<IDbSeeder>();
             builder.RegisterInstance<IConfiguration>(new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build());

@@ -6,7 +6,7 @@ namespace GicBackend.Services.DbServices
     {
         void SetupTable();
         void SeedTable();
-        List<Employee> TestSeedData();
+        int TestSeedData();
         void InsertCollection<T>(IEnumerable<T> employees);
     }
 }
