@@ -12,6 +12,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var corsPolicy = "Dammit CORS!";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corsPolicy,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000", "https://localhost:3000");
+        });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,6 +37,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors(corsPolicy);
 
 // Stuck this here to init the DB. Would not do this in production >_<
 using (var scope = DbSeederRegistrar.GetModules(typeof(Cafe)))
