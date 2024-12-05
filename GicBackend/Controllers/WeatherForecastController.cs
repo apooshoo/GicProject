@@ -1,4 +1,6 @@
 using Autofac;
+using GicBackend.DataObjects;
+using GicBackend.Services.AutofacServices;
 using GicBackend.Services.DbServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,14 +25,15 @@ namespace GicBackend.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterType<DbHelper>().As<IDbHelper>();
-            builder.RegisterType<CafeSeeder>().As<IDbSeeder>();
-            builder.RegisterInstance<IConfiguration>(new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build());
-            var container = builder.Build();
-            using (var scope = container.BeginLifetimeScope())
+            using (var scope = WeatherForecastRegistrar.GetModules(typeof(Cafe)))
+            {
+                var dbSeeder = scope.Resolve<IDbSeeder>();
+                dbSeeder.SetupTable();
+                dbSeeder.SeedTable();
+                var result = dbSeeder.TestSeedData();
+            }
+
+            using (var scope = WeatherForecastRegistrar.GetModules(typeof(Employee)))
             {
                 var dbSeeder = scope.Resolve<IDbSeeder>();
                 dbSeeder.SetupTable();

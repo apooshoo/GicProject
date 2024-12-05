@@ -5,6 +5,7 @@ namespace GicBackend.Services.DbServices
     public class EmployeeSeeder : IDbSeeder
     {
         public required IDbHelper _dbHelper { protected get; init; }
+        public required IRecordInserter _recordInserter { protected get; init; }
 
         public void SetupTable()
         {
@@ -24,7 +25,7 @@ namespace GicBackend.Services.DbServices
                 new Employee { name = "D", email_address = "DD", phone_number = "DDD", gender = "Female"  },
             };
 
-            InsertCollection(employees);
+            _recordInserter.InsertCollection(employees);
         }
 
         public int TestSeedData()
@@ -35,30 +36,6 @@ namespace GicBackend.Services.DbServices
                 var test = _dbHelper.Query<Employee>("SELECT employee_id,name,email_address,phone_number,gender FROM Employee").ToList();
                 return test.Count;
             }
-        }
-
-        public void InsertCollection<T>(IEnumerable<T> employees)
-        {
-            // Manually insert due to SQLite limitations. Otherwise, I would use _con.BulkInsert.
-            using (_dbHelper.GetOpenConnection())
-            {
-                foreach (T employee in employees)
-                {
-                    InsertSingle(employee);
-                }
-            }
-        }
-
-        private int InsertSingle<T>(T record)
-        {
-            // Manually fill in params due to SQLite limitations.
-            // Otherwise, I would use a generic _con.Insert<T>.
-            const string query = @"
-                INSERT INTO Employee (name,email_address,phone_number,gender) 
-                VALUES (@name,@email_address,@phone_number,@gender);";
-
-            var employee = record as Employee;
-            return _dbHelper.Execute(query, new { employee.name, employee.email_address, employee.phone_number, employee.gender });
         }
 
         private void DropTable()

@@ -5,6 +5,7 @@ namespace GicBackend.Services.DbServices
     public class CafeSeeder : IDbSeeder
     {
         public required IDbHelper _dbHelper { protected get; init; }
+        public required IRecordInserter _recordInserter { protected get; init; }
 
         public void SetupTable()
         {
@@ -24,7 +25,7 @@ namespace GicBackend.Services.DbServices
                 new Cafe { id = Guid.NewGuid().ToString(), name = "D", description = "DD", location = "DDD" },
             };
 
-            InsertCollection(cafes);
+            _recordInserter.InsertCollection(cafes);
         }
 
         public int TestSeedData()
@@ -35,29 +36,6 @@ namespace GicBackend.Services.DbServices
                 var test = _dbHelper.Query<Cafe>("SELECT id,name,description,location FROM Cafe").ToList();
                 return test.Count;
             }
-        }
-
-        public void InsertCollection<T>(IEnumerable<T> cafes)
-        {
-            // Manually insert due to SQLite limitations. Otherwise, I would use _con.BulkInsert.
-            using (_dbHelper.GetOpenConnection())
-            {
-                foreach (T cafe in cafes)
-                {
-                    InsertSingle(cafe);
-                }
-            }
-        }
-
-        public int InsertSingle<T>(T record)
-        {
-            // Manually fill in params due to SQLite limitations.
-            // Otherwise, I would use a generic _con.Insert<T>.
-            const string query = @"
-                INSERT INTO Cafe (id,name,description,location) 
-                VALUES (@id,@name,@description,@location);";
-            var cafe = record as Cafe;
-            return _dbHelper.Execute(query, new { cafe.id, cafe.name, cafe.description, cafe.location });
         }
 
         private void DropTable()
