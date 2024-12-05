@@ -11,7 +11,7 @@ function Home() {
         </p>
         <a
           className="App-link"
-          href="https://localhost:7099/WeatherForecast"
+          href="https://localhost:5000/cafes"
           target="_blank"
           rel="noopener noreferrer"
         >
