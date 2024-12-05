@@ -1,3 +1,4 @@
+using Autofac;
 using GicBackend.Services.DbServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,22 +14,31 @@ namespace GicBackend.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly IDbHelper _dbHelper;
-        private readonly IDbSeeder _dbSeeder;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IDbHelper dbHelper, IDbSeeder dbSeeder)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
-            _dbHelper = dbHelper;
-            _dbSeeder = dbSeeder;
+
+
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            _dbSeeder.SetupEmployeeTable();
-            _dbSeeder.SeedEmployeeTable();
-            var result = _dbSeeder.TestSeedData();
+            var builder = new ContainerBuilder();
+            builder.RegisterType<DbHelper>().As<IDbHelper>();
+            builder.RegisterType<DbSeeder>().As<IDbSeeder>();
+            builder.RegisterInstance<IConfiguration>(new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build());
+            var container = builder.Build();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var dbSeeder = scope.Resolve<IDbSeeder>();
+                dbSeeder.SetupEmployeeTable();
+                dbSeeder.SeedEmployeeTable();
+                var result = dbSeeder.TestSeedData();
+            }
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

@@ -4,12 +4,7 @@ namespace GicBackend.Services.DbServices
 {
     public class DbSeeder : IDbSeeder
     {
-        private readonly IDbHelper _dbHelper;
-
-        public DbSeeder(IDbHelper dbHelper)
-        {
-            _dbHelper = dbHelper;
-        }
+        public required IDbHelper _dbHelper { protected get; init; }
 
         public void SetupEmployeeTable()
         {

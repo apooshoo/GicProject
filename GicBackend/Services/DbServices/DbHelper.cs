@@ -5,13 +5,8 @@ namespace GicBackend.Services.DbServices
 {
     public class DbHelper : IDbHelper
     {
-        private readonly IConfiguration _config;
+        public required IConfiguration _config { protected get; init; }
         private SqliteConnection _con;
-
-        public DbHelper(IConfiguration config)
-        {
-            _config = config;
-        }
 
         private string ConnectionString
         {
