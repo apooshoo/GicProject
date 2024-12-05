@@ -7,7 +7,7 @@ const GenericGrid = ({rowData, colDefs}) => {
     const defaultColDef = {
         flex: 1,
     };
-
+    var gridHeight = window.innerHeight - 60 + 'px';
     return (
       <div
           className={
@@ -15,7 +15,7 @@ const GenericGrid = ({rowData, colDefs}) => {
           }
           style={{ 
             width: '100%', 
-            height: '500px' 
+            height: gridHeight
           }}
       >
           <AgGridReact rowData={rowData} columnDefs={colDefs} defaultColDef={defaultColDef} />

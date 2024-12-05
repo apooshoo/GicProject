@@ -7,16 +7,20 @@ function Home() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Hello, I'm Jon.
         </p>
-        <a
-          className="App-link"
-          href="https://localhost:5000/cafes"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p>
+          Please click on "Cafe" or  
+          <a 
+            style={{marginLeft:'10px', marginRight:'10px'}}
+            className="App-link"
+            href="/cafes"
+            target="_blank"
+            rel="noopener noreferrer">
+              here
+          </a>
+          to have a look.
+        </p>
       </header>     
     </div>
   );
