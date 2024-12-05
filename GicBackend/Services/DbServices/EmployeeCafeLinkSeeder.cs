@@ -32,7 +32,6 @@ namespace GicBackend.Services.DbServices
         {
             using (_dbHelper.GetOpenConnection())
             {
-                // Omit "id" as we are doing the computed column server-side instead of in the DB.
                 var test = _dbHelper.Query<EmployeeCafeLink>("SELECT employee_id,cafe_id,start_date,end_date FROM EmployeeCafeLink").ToList();
                 return test.Count;
             }
