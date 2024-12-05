@@ -14,7 +14,7 @@ function Home() {
           <a 
             style={{marginLeft:'10px', marginRight:'10px'}}
             className="App-link"
-            href="/cafes"
+            href="/cafe"
             target="_blank"
             rel="noopener noreferrer">
               here
