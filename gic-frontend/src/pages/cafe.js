@@ -1,14 +1,29 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 import GenericGrid from '../components/grid'
+import axios from 'axios';
 
 const Cafe = () => {
+  
+  useEffect(() => {
+    //Runs only on the first render
+      axios.get('https://localhost:5000/cafes')
+      .then(function (response) {
+        console.log(response);
+        setRowData(response.data)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }, []);
+
+
     const [rowData, setRowData] = useState([
-      { Logo: "A", Name: "Round Boy Roasters", Description: "", Employees: "", Location: "" },
-      { Logo: "B", Name: "Yahava", Description: "", Employees: "", Location: "" },
-      { Logo: "C", Name: "Starbucks", Description: "", Employees: "", Location: "" }
+      // { Logo: "A", Name: "Round Boy Roasters", Description: "", Employees: "", Location: "" },
+      // { Logo: "B", Name: "Yahava", Description: "", Employees: "", Location: "" },
+      // { Logo: "C", Name: "Starbucks", Description: "", Employees: "", Location: "" }
     ]);
 
     const OpenEmployeePageBtn = (props) => {
@@ -22,10 +37,10 @@ const Cafe = () => {
     };
   
     const [colDefs, setColDefs] = useState([
-      { field: "Logo" },
-      { field: "Name" },
-      { field: "Description" },
-      { field: "Location", filter: true },
+      { field: "id" },
+      { field: "name" },
+      { field: "description" },
+      { field: "location", filter: true },
       { field: "button", cellRenderer: OpenEmployeePageBtn }
     ]);
  
