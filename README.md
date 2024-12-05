@@ -14,12 +14,12 @@ Please edit the API in appsettings.json > Urls or edit the client in .env > PORT
 
 ## How to run
 API:
-Navigate to solution folder "GicBackend" and run "dotnet run". 
+Open a terminal and navigate to solution folder "GicBackend" and run "dotnet run". 
 Or, if you have visual studio, build and run the solution yourself.
 If all else fails, drop me a message and I can send you the published .exe.
 
 Client:
-Navigate to client folder "gic-frontend" and run npm start.
+Open another terminal and navigate to client folder "gic-frontend", run "npm install", then "npm start".
 
 
 ## Things I did for back-end:
